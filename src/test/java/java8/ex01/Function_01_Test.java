@@ -6,6 +6,8 @@ import org.junit.Test;
 
 import java.util.function.Function;
 
+import javax.naming.spi.DirStateFactory.Result;
+
 
 /**
  * Exercice 01 - java.util.function.Function
@@ -16,25 +18,35 @@ public class Function_01_Test {
 
     // tag::intToPerson[]
     // TODO Compléter la définition de cette fonction
+	
     // TODO Cette fonction permet de transformer un entier en objet Person
     // TODO le prenom sera de la forme "first_<ENTIER>"
     // TODO le nom sera de la forme "last_<ENTIER>"
     // TODO l'age sera de la forme "<ENTIER>"
     // TODO le mot de passe sera de la forme "pass_<ENTIER>"
-    private Function<Integer, Person> intToPerson = null;
+    private Function<Integer, Person> intToPerson = (t) -> {
+  
+    		Person p = new Person(); 
+    		p.setFirstname("first_"+ t);
+    		p.setLastname("last_"+ t);
+    		p.setAge(t);
+    		p.setPassword("pass_" + t);
+    		return  p;
+	};
+    	 
     // end::intToPerson[]
 
     @Test
     public void test_intToPerson() throws Exception {
 
         // TODO invoquer la fonction intToPerson avec en paramètre l'entier 10.
-        Person result = null;
+        Person result = intToPerson.apply(10);
 
         assert result.getFirstname().equals("first_10");
         assert result.getLastname().equals("last_10");
         assert result.getAge().equals(10);
         assert result.getPassword().equals("pass_10");
-    }
+    };
 
     /******** PART 2 - Person -> Account *******/
 
@@ -42,7 +54,18 @@ public class Function_01_Test {
     // TODO Compléter la définition de cette fonction
     // TODO la propriété owner est valorisé avec la personne en paramètre
     // TODO la propriété balance est valorisé à 1000
-    private Function<Person, Account> personToAccount = null;
+    
+    private Function<Person, Account> personToAccount = (t) -> {
+    	
+    	Account a = new Account();
+    	a.getOwner().equals(t);
+    	a.getBalance().equals(1000);
+    	
+  
+    	
+    	return a;
+    	
+    };
     // end::personToAccount[]
 
     @Test
@@ -51,7 +74,7 @@ public class Function_01_Test {
         Person person = new Person("Jules", "France", 10, "pass");
 
         // TODO invoquer la fonction personToAccount
-        Account result = null;
+        Account result = personToAccount.apply(person);
 
         assert result.getOwner().equals(person);
         assert result.getBalance().equals(1000);
@@ -63,7 +86,11 @@ public class Function_01_Test {
     // tag::intToAccountWithCompose[]
     // TODO Compléter la définition de cette fonction
     // TODO Utiliser la méthode compose pour réutiliser les fonctions intToPerson et personToAccount
-    private Function<Integer, Account> intToAccountWithCompose = null;
+    private Function<Integer, Account> intToAccountWithCompose = (t) -> {
+  
+    	return personToAccount.compose(intToPerson).apply(t);
+    	
+    };
     // end::intToAccountWithCompose[]
 
 
@@ -71,7 +98,7 @@ public class Function_01_Test {
     public void test_intToAccount_with_Compose() throws Exception {
 
         // TODO invoquer la fonction intToAccountWithCompose avec l'entier 10
-        Account result = null;
+        Account result = intToAccountWithCompose.apply(10);
 
         assert result.getOwner().getFirstname().equals("first_10");
         assert result.getBalance().equals(1000);
@@ -82,14 +109,16 @@ public class Function_01_Test {
     // tag::intToAccountWithAndThen[]
     // TODO Compléter la définition de cette fonction
     // TODO Utiliser la méthode andThen pour réutiliser les fonctions intToPerson et personToAccount
-    private Function<Integer, Account> intToAccountWithAndThen = null;
+    private Function<Integer, Account> intToAccountWithAndThen = (t) -> {
+    	return intToPerson.andThen(personToAccount).apply(t);
+    };
     // end::intToAccountWithAndThen[]
 
     @Test
     public void test_intToAccount_with_AndThen() throws Exception {
 
         // TODO invoquer la fonction intToAccountWithAndThen avec l'entier 11
-        Account result = null;
+        Account result = intToAccountWithAndThen.apply(11);
 
         assert result.getOwner().getFirstname().equals("first_11");
         assert result.getBalance().equals(1000);
