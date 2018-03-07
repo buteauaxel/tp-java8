@@ -37,17 +37,13 @@ public class Optional_01_Test {
     // end::findMethod[]
     
     
-    <T> Optional<T> find(List<T> list, Predicate<T> predicate, T defaultValue) {
-        T result = null;
-
-        for (T p : list) {
-            if (predicate.test(p)) {
-                result = p;
-                break;
+    <T> T find(List<T> list, Predicate<T> predicate, T defaultValue) {
+    	T result = defaultValue;
+    	Optional<T> test = find(list, predicate);
+            if (test.isPresent()) {
+                result = test.get();
             }
-        }
-
-        return Optional.ofNullable(result);
+        return result;
     }
 
     @Test
