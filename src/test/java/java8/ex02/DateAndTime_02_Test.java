@@ -21,12 +21,12 @@ public class DateAndTime_02_Test {
     public void test_localDate_of() {
 
         // TODO créer un objet LocalDate à la date 24/12/2050
-        LocalDate result = null;
+        LocalDate result = LocalDate.of(2050, 12, 24);
 
         // TODO valoriser les différentes variables afin de rendre le test passant
-        int year = 0;
-        Month month = null;
-        int dayOfMonth = 0;
+        int year = 2050;
+        Month month = 12;
+        int dayOfMonth = 24;
         DayOfWeek dayOfWeek = null;
         int dayOfYear = 0;
 
