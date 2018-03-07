@@ -22,12 +22,10 @@ public class Function_06_Test {
     // TODO la méthode retourne une chaîne de caractères de la forme [age=<AGE>] (exemple : [age=12])
     String formatAge(Supplier<Person> supplier) {
         // TODO
-    	String chaine = null;
-    	Person p = new Person();
-    	chaine = ("[age="+p.getAge()+"]");
+    	return "[age=" + supplier.get().getAge() + "]";
     	
     	
-        return chaine;
+        
     }
     // end::formatAge[]
 
@@ -35,7 +33,7 @@ public class Function_06_Test {
     @Test
     public void test_supplier_formatAge() throws Exception {
         // TODO compléter le test unitaire pour qu'il soit passant
-        String result = formatAge(() -> new Person("Touille","rata", 35, null));
+        String result = formatAge(() -> new Person("Touille","rata",35, null));
         assert result.equals("[age=35]");
     }
 
