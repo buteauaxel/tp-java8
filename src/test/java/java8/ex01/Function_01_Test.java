@@ -6,8 +6,6 @@ import org.junit.Test;
 
 import java.util.function.Function;
 
-import javax.naming.spi.DirStateFactory.Result;
-
 
 /**
  * Exercice 01 - java.util.function.Function
